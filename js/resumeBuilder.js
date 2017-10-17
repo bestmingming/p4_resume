@@ -154,17 +154,17 @@ var enducaiton = {
 var work =  {
     "jobs": [
         {
-            "employer": "",
-            "title": "",
-            "location": "ddd",
-            "date": "",
-            "description":""
+            "employer": "newhope",
+            "title": "engineer",
+            "location": "hunan.changsha",
+            "date": "2015",
+            "description":"My first job, "
         },
         {
-            "employer":"",
-            "title":"",
-            "location":"",
-            "dates":new Date(),
+            "employer":"newhope2",
+            "title":"engineer",
+            "location":"GuangXi.LiuZhou",
+            "dates":"2016 to"+new Date().getFullYear(),
             "description":""
         }
     ],
@@ -274,6 +274,20 @@ var displayBio = function() {
     
 }
 displayBio();
+
+var displayWork = function() {
+	work.jobs.forEach(function(element)) {
+       $("#workExperiece").append(HTMLworkStart);
+       var formattedEmployer = HTMLworkEmployer.replace("%data%",element);
+       var formattedTitle =  HTMLworkTitle.replace("%data%",element);
+       var formattedEmployerTitle = formattedEmployer + formattedTitle;
+       $(".work-entry:last").append(formattedEmployerTitle);
+       var formattedDates =  HTMLworkDates.replace("%data%",work.jobs[job].dates);
+       $(".work-entry:last").append(formattedDates);
+       var formattedDescription =  HTMLworkDescription.replace("%data%",work.jobs[job].description);
+       $(".work-entry:last").append(formattedDescription);
+   }
+}
 // function displaywork() {
 //   work.jobs.forEach(function(element) {
 //       $("#workExperiece").append(HTMLworkStart);
