@@ -125,7 +125,7 @@ var bio = {
     },
     "welcomeMessage": "有朋自远方来不亦乐乎",
     "skills": ["drawing", "computer", "writting", "basketball"],
-    "biopic": "img",
+    "biopic": "./images/fry.jpg",
     "display": function(){}
 };
 
@@ -246,24 +246,34 @@ var projects  = {
 // var username = "yangming";
 // var awesomeThoughts = "I am yangming and I am AWESOME!";
 // var userEmail = "451168805@qq.com";
-function displayBio() {
+var displayBio = function() {
     var formattedName = HTMLheaderName.replace("%data%",bio.name);
     var formattedRole = HTMLheaderRole.replace("%data%",bio.role);
-    $("#header").append(formattedName);
-    $("#header").append(formattedRole);
-    for(contact in bio.contacts) {
-        // $("#topContacts").append(HTMLcontactGeneric);
-        var formattedContact =HTMLcontactGeneric.replace();
-        var formattedMobile = HTMLmobile.replace("%data%", bio.contacts[contact]);
-        alert(bio.contacts[contact]);
-        var formattedEmail = HTMLemail.replace("%data%", bio.contacts[contact]);
-        $("#topContact").append(formattedMobile);
-        $("#topContact").append(formattedEmail);
+    $("#header").prepend(formattedRole);
+    $("#header").prepend(formattedName);
+    for(var contact in bio.contacts) {
+        var formattedMobile = HTMLmobile.replace("%data%", bio.contacts.mobile);
+        var formattedEmail = HTMLemail.replace("%data%", bio.contacts.email);
+        var formattedTwitter = HTMLtwitter.replace("%data%", bio.contacts.twitter);
+        var formattedGithub = HTMLgithub.replace("%data%",bio.contacts.github);
+        var formattedLocation = HTMLlocation.replace("%data%",bio.contacts.location);
+        var formattedCompents = formattedMobile+formattedEmail+formattedTwitter+formattedLocation;
+        $("#topContacts").append(formattedCompents);
+        break;
+    }
+    var formattedPic = HTMLbioPic.replace("%data%", bio.biopic);
+    var formattedWelcomeMsg = HTMLwelcomeMsg.replace("%data%", bio.welcomeMessage);
+    var formattedSkillStart = HTMLskillsStart;
+    $("#topContacts").append(formattedPic+formattedWelcomeMsg+formattedSkillStart);
+    
+    for (var skill in bio.skills) {
+    	var formattedSkills = HTMLskills.replace("%data%", bio.skills[skill]);
+    	$("#topContacts").append(formattedSkills);
     }
     
     
 }
-window.onload=displayBio();
+displayBio();
 // function displaywork() {
 //   work.jobs.forEach(function(element) {
 //       $("#workExperiece").append(HTMLworkStart);
