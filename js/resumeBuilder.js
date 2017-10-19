@@ -115,16 +115,16 @@ This is empty on purpose! Your code to build the resume will go here.
 
 var bio = {
     "name": "Mingle",
-    "role": "NHV Engineer",
+    "role": "NVH Engineer",
     "contacts": {
         "mobile": "18172199893",
         "email": "1141031530@qq.com",
         "github": "bestmingming",
-        "twitter": "no regitted",
-        "location": "liuchou"
+        "twitter": "Not Registered",
+        "location": "LiuChou"
     },
     "welcomeMessage": "有朋自远方来不亦乐乎",
-    "skills": ["drawing", "computer", "writting", "basketball"],
+    "skills": ["drawing", "computer", "writting", "basketball","programing"],
     "biopic": "./images/fry.jpg",
     "display": function(){}
 };
@@ -132,40 +132,44 @@ var bio = {
 var enducaiton = {
     "schools": [
         {
-            "name": "",
-            "location": "",
-            "degree": "",
-            "major": [],
-            "dates": "2017-05-09",
-            "url": ""
+            "name": "CAU",
+            "location": "BeiJin",
+            "degree": "Bachelor",
+            "major": ["vehicle engineering"],
+            "dates": "2014-07-01",
+            "url": "http://www.cau.edu.cn/"
         }
     ],
     "onlineCourses":[
         {
-            "title": "",
-            "school": "",
-            "dates": "",
-            "url": ""
+            "title": "Front-end portal development",
+            "school": "Udacity",
+            "dates": "2017-08-18",
+            "url": "https://cn.udacity.com/"
         }
     ],
     "display": function() {}
 };
 
+
 var work =  {
     "jobs": [
         {
-            "employer": "newhope",
+            "employer": "YC",
             "title": "engineer",
             "location": "hunan.changsha",
-            "date": "2015",
-            "description":"My first job, "
+            "dates": "2014/07/01-2015/10/25",
+            "description":"My first job, Engine after-sales engineer.I Experienced with engine failure detection, "+
+            "and to be able to handle client issues in a timely manner.I cherish this experience very much !"
         },
         {
-            "employer":"newhope2",
+            "employer":"SGMW",
             "title":"engineer",
             "location":"GuangXi.LiuZhou",
-            "dates":"2016 to"+new Date().getFullYear(),
-            "description":""
+            "dates":"2016/03/01-Now",
+            "description":"Present work,Chassis NVH engineer. It extremely interesting and very dangerous."+
+            "I often test mule cars.I don't like test in hot day,because when testing "+
+            "the air conditioner must be turn off and the windows must be closed.I very hot."
         }
     ],
     "display": function() {}
@@ -174,10 +178,11 @@ var work =  {
 var projects  = {
     "projects": [
         {
-            "title": "",
-            "date": "",
-            "description": "",
-            "images": ""
+            "title": "Sample project",
+            "date": "2015",
+            "description": "Created 3d local coordinate conversion tool by matlab,"+ 
+            "Trying to implement this functionality with js ",
+            "images": "./images/zolo.jpg"
         }
     ],
     "display" : function(){}
@@ -264,11 +269,11 @@ var displayBio = function() {
     var formattedPic = HTMLbioPic.replace("%data%", bio.biopic);
     var formattedWelcomeMsg = HTMLwelcomeMsg.replace("%data%", bio.welcomeMessage);
     var formattedSkillStart = HTMLskillsStart;
-    $("#topContacts").append(formattedPic+formattedWelcomeMsg+formattedSkillStart);
+    $("#header").append(formattedPic+formattedWelcomeMsg+formattedSkillStart);
     
     for (var skill in bio.skills) {
     	var formattedSkills = HTMLskills.replace("%data%", bio.skills[skill]);
-    	$("#topContacts").append(formattedSkills);
+    	$("#header").append(formattedSkills);
     }
     
     
@@ -276,19 +281,50 @@ var displayBio = function() {
 displayBio();
 
 var displayWork = function() {
-	work.jobs.forEach(function(element)) {
-       $("#workExperiece").append(HTMLworkStart);
-       var formattedEmployer = HTMLworkEmployer.replace("%data%",element);
-       var formattedTitle =  HTMLworkTitle.replace("%data%",element);
+	work.jobs.forEach(function(element){
+       $("#workExperience").append(HTMLworkStart);
+       var formattedEmployer = HTMLworkEmployer.replace("%data%",element.employer);
+       var formattedTitle =  HTMLworkTitle.replace("%data%",element.title);
        var formattedEmployerTitle = formattedEmployer + formattedTitle;
        $(".work-entry:last").append(formattedEmployerTitle);
-       var formattedDates =  HTMLworkDates.replace("%data%",work.jobs[job].dates);
+       var formattedDates =  HTMLworkDates.replace("%data%",element.dates);
        $(".work-entry:last").append(formattedDates);
-       var formattedDescription =  HTMLworkDescription.replace("%data%",work.jobs[job].description);
+       var formattedDescription =  HTMLworkDescription.replace("%data%",element.description);
        $(".work-entry:last").append(formattedDescription);
-   }
+ });
 }
-// function displaywork() {
+displayWork();
+
+var displayProject = function () {
+	$("#projects").append(HTMLprojectStart);
+	projects.projects.forEach(function(element) {
+		
+		var formattedTitle = HTMLprojectTitle.replace("%data%",element.title);
+		var formattedDates = HTMLprojectDates.replace("%data%",element.date);
+		var formattedDescription = HTMLprojectDescription.replace("%data%",element.description);
+		var formattedImg = HTMLprojectImage.replace("%data%",element.images);
+		function addInfo(info) {
+			$(".project-entry:last").append(info);
+		}
+		addInfo(formattedTitle);
+		addInfo(formattedDates);
+		addInfo(formattedDescription);
+//		addInfo(formattedImg);
+	});
+}
+displayProject();
+
+var displayEducation = function () {
+	$("#education").append(HTMLschoolStart);
+	var getInfo = function (info,setinfo) {
+		info.replace("%data%",setinfo);
+		return getInfo();
+	}
+	enducaiton.schools.forEach(function(element) {
+		getInfo(HTMLschoolName,)
+	});
+}
+//// function displaywork() {
 //   work.jobs.forEach(function(element) {
 //       $("#workExperiece").append(HTMLworkStart);
 //       var formattedEmployer = HTMLworkEmployer.replace("%data%",work.jobs[job].employer);
