@@ -151,7 +151,7 @@ var projects = {
 	    });
     }
 };
-$("#mapDiv").append(googleMap);
+
 
 bio.display();
 work.display();
