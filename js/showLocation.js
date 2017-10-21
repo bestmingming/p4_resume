@@ -5,6 +5,7 @@ function locationFinder() {
 
     // initializes an empty array
     var locations = [];
+    var positions = [];
 
     // adds the single location property from bio to the locations array
     locations.push(bio.contacts.location);
@@ -16,7 +17,37 @@ function locationFinder() {
     education.schools.forEach(function(school){
       locations.push(school.location);
     });
-   }
+    
+    work.jobs.forEach(function(job) {
+    	locations.push(job.location);
+    })
+    for (var i = 0; i < locations.length; i++){
+    AMap.service('AMap.Geocoder',function(){//回调函数
+    //实例化Geocoder
+    geocoder = new AMap.Geocoder({
+        city: "北京"，
+        city: "柳州" 
+        batch: true
+        //城市，默认：“全国”
+    });
+    //TODO: 使用geocoder 对象完成相关功能
+    geocoder.getLocation(locations[i], function(status, result) {
+    if (status === 'complete' && result.info === 'OK') {
+        //TODO:获得了有效经纬度，可以做一些展示工作
+        //比如在获得的经纬度上打上一个Marker
+        alert("ok");
+        
+    }else{
+        //获取经纬度失败
+        alert("defualt")
+    }
+});
+})
+    }
+}
+
+//获取经纬度
+locationFinder();
 
  //创建地图
     var map = new AMap.Map('map', {

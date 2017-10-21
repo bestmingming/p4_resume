@@ -247,3 +247,4 @@ Uncomment the code below when you're ready to implement a Google Map!
   //Make sure the map bounds get updated on page resize
 //  map.fitBounds(mapBounds);
 //});
+
