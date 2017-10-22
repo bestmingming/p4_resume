@@ -37,25 +37,27 @@ var map = new AMap.Map('map', {
 var geocoder = new AMap.Geocoder({
 
 });
-var sites = new Array();
-var pointLngLat = {};
+var pointLngLat = new Object();
+pointLngLat.city = [];
+pointLngLat.LngLat = [];
 
 //获取城市的经纬度
 function getInfo () {
-for(var i=0; i<locations.length; i++) {
-	geocoder.getLocation(locations[i],function(status,result){
-	    if(status=='complete'&&result.geocodes.length){
-	        pointLngLat[i] = {
-	        	"city":locations[i],
-	        	"LngLat":[result.geocodes[0].location.lng, result.geocodes[0].location.lat]
-	        }
-	        sites.push(pointLngLat[i]);
-	    }else{
-	        console.log("False");
-	    	}
-		});
-	}
-return sites;
+    for(i = 0;i<locations.length; i++){
+        pointLngLat.city[i] = locations[i];
+    }
+    var countLngLat = locations.length;
+    for(j = 0; j < countLngLat; j++){
+        geocoder.getLocation(locations[j],function(status,result){
+            if(status=='complete'&&result.geocodes.length){
+                pointLngLat.LngLat.push([result.geocodes[0].location.lng, result.geocodes[0].location.lat]);
+                console.log(pointLngLat);
+            }
+            else {
+                console.log("False");
+            }
+        });
+    }
 }
 getInfo();
     
@@ -96,8 +98,8 @@ AMapUI.load(['ui/misc/PathSimplifier', 'lib/$'], function(PathSimplifier, $) {
 
 //    设置数据
 	var path = [];
-	for(var j = 0 ; j < sites.length; j++) {
-		path.push(sites[j].LngLat)
+	for(var j = 0 ; j < pointLngLat.LngLat.length; j++) {
+		path.push(pointLngLat.LngLat[j])
 	}
 	pathSimplifierIns.setData([{
 	    name: '北京-柳州',
@@ -125,7 +127,7 @@ AMapUI.loadUI(['overlay/SimpleMarker'], function(SimpleMarker) {
 function initPage(SimpleMarker) {
 
     //创建SimpleMarker实例
-	for(var i = 0; i < sites.length; i++) {
+	for(var i = 0; i < pointLngLat.LngLat.length; i++) {
 		new SimpleMarker({
 			
 		
@@ -143,7 +145,7 @@ function initPage(SimpleMarker) {
 		
 		    //...其他Marker选项...，不包括content
 		    map: map,
-		    position: sites[i].LngLat
+		    position: pointLngLat.LngLat[i]
 		});
 	}
 }
