@@ -1,7 +1,7 @@
 var aliMap = '<div id="map"></div>';
 $("#mapDiv").append(aliMap);
 
- var locations = [];
+var locations = [];
 function locationFinder() {
 
     // initializes an empty array
@@ -39,15 +39,16 @@ var geocoder = new AMap.Geocoder({
 });
 var sites = new Array();
 var pointLngLat = {};
+
+//获取城市的经纬度
 function getInfo () {
-for(var i=0;i<locations.length;i++){
+for(var i=0; i<locations.length; i++) {
 	geocoder.getLocation(locations[i],function(status,result){
 	    if(status=='complete'&&result.geocodes.length){
 	        pointLngLat[i] = {
 	        	"city":locations[i],
 	        	"LngLat":[result.geocodes[0].location.lng, result.geocodes[0].location.lat]
 	        }
-	        console.log(pointLngLat[i].city);
 	        sites.push(pointLngLat[i]);
 	    }else{
 	        console.log("False");
@@ -100,7 +101,7 @@ AMapUI.load(['ui/misc/PathSimplifier', 'lib/$'], function(PathSimplifier, $) {
 	}
 	pathSimplifierIns.setData([{
 	    name: '北京-柳州',
-	    path: path,
+	    path: path.reverse(),
 	}]);
 
     //对第一条线路（即索引 0）创建一个巡航器
@@ -129,13 +130,16 @@ function initPage(SimpleMarker) {
 			
 		
 		    //前景文字
-		    iconLabel: sites[i].city,
+		    iconLabel: locations[i],
 		
 		    //图标主题
 		    iconTheme: 'default',
 		
 		    //背景图标样式
 		    iconStyle: 'red',
+		    
+		    //设置动画
+		    animation: "AMAP_ANIMATION_BOUNCE",
 		
 		    //...其他Marker选项...，不包括content
 		    map: map,
@@ -143,21 +147,3 @@ function initPage(SimpleMarker) {
 		});
 	}
 }
-//创建SimpleMarker实例
- 
-//new SimpleMarker({
-//
-//  //前景文字
-//  iconLabel: '柳州',
-//
-//  //图标主题
-//  iconTheme: 'default',
-//
-//  //背景图标样式
-//  iconStyle: 'gray',
-//
-//  //...其他Marker选项...，不包括content
-//      map: map,
-//      position: sites[0].LngLat
-//  });
-//}
